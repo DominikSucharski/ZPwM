@@ -1,33 +1,15 @@
 #include <Windows.h>;
-#include "string";
+#include "res.h"
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR szCmdLine, int iCmdShow) {
-  /**
-  Na poniedzia³ek: przygotowaæ grê w której komputer zgaduje liczbê (u¿ytkownik odpowiada tak lub nie)
-  najpierw komunikat wybierz liczbê
-  przygotowaæ obrazek w bmp i ikonkê .ico
-  */
-  int minUserNumber = 0;
-  int maxUserNumber = 40;
-  int diff, guess;
-  char buffer[60];
+  HWND hwndMainWindow = CreateDialog(hInstance, MAKEINTRESOURCE(IDD_MAINVIEW), NULL, NULL);
+  ShowWindow(hwndMainWindow, iCmdShow);
+  while (1) {
 
-while(minUserNumber != (maxUserNumber-1)) {
-    diff = maxUserNumber - minUserNumber;
-    guess = minUserNumber + (ceil(diff / 2));
-    sprintf_s(buffer, "Czy Twoja liczba jest < %d \nzakres %d : %d", guess, minUserNumber, maxUserNumber);
-    int iRetKey = MessageBox(0, buffer, "Zgadywanie liczby", MB_YESNO);
-    if (iRetKey == IDYES) {
-      //mniejsza
-      maxUserNumber -= diff / 2;
-    }
-    else {
-      //wieksza lub równa
-      minUserNumber += ceil(diff / 2);
-      if (ceil(diff / 2) == 0) break;
-    }
   }
-  sprintf_s(buffer, "Twoja liczba to %d", minUserNumber);
-  int iRetKey = MessageBox(0, buffer, "Zgadywanie liczby", MB_OK);
+  //do zrobienia:
+  /*
+  upiêkszyæ aplikacjê (wstawiæ przyciski, obrazek itp...)
+  */
   return 0;
 }
