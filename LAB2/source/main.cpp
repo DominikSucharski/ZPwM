@@ -19,7 +19,10 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR szCmdLine,
   wc.hbrBackground = 0;
   wc.lpszMenuName = TEXT("Pierwsza klasa");
   //rejestracja klasy okna
-  if (!RegisterClass(&wc)) return false;
+  if (!RegisterClass( &wc )) return (FALSE);
+  HWND hWnd = CreateWindow(TEXT("First Class"), TEXT("okno1"), WS_OVERLAPPEDWINDOW
+    , 0, 0, 200, 200, NULL, NULL, hInstance, NULL);
+  if (hWnd = NULL) return (FALSE);
   MessageBox(0, TEXT("nazwa1"), TEXT("info"), MB_OK);
   while (1) {
 
