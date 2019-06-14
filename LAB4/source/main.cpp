@@ -1,9 +1,11 @@
 #include <Windows.h>
 #include <atlstr.h>
-#include "Res.h"
+#include "res.h"
 #include <stdlib.h>
 #include <ctime>
 int LosowaLiczba,licznik;
+HINSTANCE hInst;
+
 INT_PTR CALLBACK DialogProc(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM IParam)
 {
   switch (uMsg)
@@ -21,6 +23,8 @@ INT_PTR CALLBACK DialogProc(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM IPara
     HDC hDCBitmap;
     hDCBitmap = CreateCompatibleDC(hDC);  //utworzenie kompatybilnego kontekstu
     SelectObject(hDCBitmap, hBitmap); // wybranie bitmapy w kontekœcie
+    LPRECT lpRect;
+    GetWindowRect(hwndDlg, lpRect);
     BitBlt(hDC, 0, 0, 900, 400, hDCBitmap, 0,0, SRCCOPY); // skopiowanie obj
     DeleteDC(hDCBitmap); //Usuniêcie kontekstu
     DeleteObject(hBitmap);
@@ -80,6 +84,7 @@ return FALSE;
 }
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR szCmdLine, int iCmdShow)
 {
+  hInst = hInstance;
   int iRetKey = MessageBox(0, "zagrajmy w grê! wylosuje dla Ciebie liczbe z przedzia³u od 1-100 a ty zgadnij co to za liczba!", "GRA", MB_OK);
     srand((time(NULL)));
     LosowaLiczba = rand() % 100 + 1;
@@ -96,4 +101,10 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR szCmdLine,
 
   return 0;
   
+
+  /**
+  Zrobiæ funkcjonalnoœæ lupy
+  
+  
+  */
 }

@@ -30,7 +30,7 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="..\..\LAB4\random-bitmap.bmp">
+    <Image Include="..\random-bitmap.bmp">
       <Filter>Pliki zasobów</Filter>
     </Image>
   </ItemGroup>

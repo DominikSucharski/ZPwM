@@ -9,13 +9,13 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR szCmdLine,
   */
   int minUserNumber = 0;
   int maxUserNumber = 40;
-  int diff, guess;
+  int diff, guessing_number;
   char buffer[60];
 
 while(minUserNumber != (maxUserNumber-1)) {
     diff = maxUserNumber - minUserNumber;
-    guess = minUserNumber + (ceil(diff / 2));
-    sprintf_s(buffer, "Czy Twoja liczba jest < %d \nzakres %d : %d", guess, minUserNumber, maxUserNumber);
+    guessing_number = minUserNumber + (ceil(diff / 2));
+    sprintf_s(buffer, "Czy Twoja liczba jest < %d \nzakres %d : %d", guessing_number, minUserNumber, maxUserNumber);
     int iRetKey = MessageBox(0, buffer, "Zgadywanie liczby", MB_YESNO);
     if (iRetKey == IDYES) {
       //mniejsza

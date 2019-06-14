@@ -23,7 +23,7 @@
     <ProjectGuid>{A37E443D-F55E-4990-91C1-E72AB15BC19C}</ProjectGuid>
     <RootNamespace>makevisual2017</RootNamespace>
     <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
-    <ProjectName>LAB4</ProjectName>
+    <ProjectName>nazwa</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -122,15 +122,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\source\main.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="..\source\res.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="..\source\res.rc" />
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="..\..\LAB4\random-bitmap.bmp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
