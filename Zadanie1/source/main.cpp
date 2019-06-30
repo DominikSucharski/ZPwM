@@ -1,12 +1,13 @@
+/**
+Grê w której komputer zgaduje liczbê (u¿ytkownik odpowiada tak lub nie)
+najpierw komunikat wybierz liczbê
+przygotowaæ obrazek w bmp i ikonkê .ico
+*/
 #include <Windows.h>;
 #include "string";
 
+
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR szCmdLine, int iCmdShow) {
-  /**
-  Na poniedzia³ek: przygotowaæ grê w której komputer zgaduje liczbê (u¿ytkownik odpowiada tak lub nie)
-  najpierw komunikat wybierz liczbê
-  przygotowaæ obrazek w bmp i ikonkê .ico
-  */
   int minUserNumber = 0;
   int maxUserNumber = 40;
   int diff, guessing_number;
