@@ -8,7 +8,7 @@
 * Lab 8 - Użycie klawiatury w openGL + tworzenie świata.
 ### Zadania domowe:
 * Zadanie 1:
-Napisanie prostej gry w której komputer zgaduje jaka liczbę wybrał użytkownik(przedział 0-40)(MessageBox).
+Napisanie prostej gry w której komputer zgaduje jaka liczbę wybrał użytkownik(przedział 0-40)(MessageBox). [Lab 1](https://github.com/DominikSucharski/ZPwM/tree/master/LAB1)
 * Zadanie 2:
 Napisanie gry w której to użytkownik znajduje liczbę wylosowaną przez komputer. Liczba wpisywana jest w pole tekstowe i sprawdzana jest po wcisnięciu przycisku. Informacja zwrotna o tym czy liczba jest za duża jest wyświetlana jako tekst przycisku.
 * Zadanie 3:
