@@ -38,7 +38,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR szCmdLine,
 
 	if (hWnd = NULL) return (FALSE);  // sprawdzenie czy okno zosta³o utworzone
 
-	HWND hwndMainWindow = CreateDialog(hInstance, NULL, NULL, NULL);
+	//HWND hwndMainWindow = CreateDialog(hInstance, NULL, NULL, NULL);
 	ShowWindow(hWnd, iCmdShow);  // wyœwietlenie okna
 	UpdateWindow(hWnd);
 
@@ -56,7 +56,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR szCmdLine,
 LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam) {
 	switch (message) {
 	case WM_CREATE:  // tworzenie okna
-		/*
 		CreateWindow(
 			TEXT("FirstAppClass"),        //Nazwa zarejestrowanej klasy okna
 			TEXT("okno2"),                //Nazwa okna
@@ -69,7 +68,6 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam) 
 			NULL);
 
 		break;
-		*/
 	case WM_PAINT:  // rysowanie okna
 		/*
 		HDC hDC;  // uchwyt do kontekstu urz¹dzenia
