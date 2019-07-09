@@ -91,6 +91,10 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
+    <ResourceCompile>
+      <AdditionalIncludeDirectories>
+      </AdditionalIncludeDirectories>
+    </ResourceCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -128,6 +132,11 @@
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="..\source\kółko i krzyżyk.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="..\source\error.wav" />
+    <Media Include="..\source\smashing.wav" />
+    <Media Include="..\source\win.wav" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

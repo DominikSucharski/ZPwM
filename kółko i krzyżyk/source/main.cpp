@@ -18,7 +18,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR szCmdLine,
     DispatchMessage(&msg);
   }
   /*KONIEC GRY*/
-  PlaySound((LPCSTR)"../source/win.wav", nullptr, SND_ASYNC);
+  PlaySound((LPCSTR)"../source/win.wav", nullptr, SND_ASYNC | SND_FILENAME);
   if (winner == 1) MessageBox(nullptr, TEXT("Wygra³ gracz 1"), TEXT("Koniec gry"), MB_OK);
   else if (winner == 2) MessageBox(nullptr, TEXT("Wygra³ gracz 2"), TEXT("Koniec gry"), MB_OK);
   else MessageBox(nullptr, TEXT("Remis"), TEXT("Koniec gry"), MB_OK);
@@ -83,7 +83,7 @@ INT_PTR CALLBACK MainWinProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lPar
     else if ((board[0][0] == board[1][1]) && (board[1][1] == board[2][2])) winner = board[1][1];
     else if ((board[0][2] == board[1][1]) && (board[1][1] == board[2][0])) winner = board[1][1];
 
-    if (winner)
+    if (winner || (free_fields == 0))
     {
       Sleep(200);
       DestroyWindow(hwnd);
@@ -100,10 +100,10 @@ INT_PTR CALLBACK MainWinProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lPar
 
     //kontrola zmiennych odpowiadaj¹cych za wybrane pole
     if (click_field_x > 2 || click_field_y > 2) {
-      PlaySound((LPCSTR)"../source/error.wav", nullptr, SND_ASYNC);
+      PlaySound((LPCSTR)"../source/error.wav", nullptr, SND_ASYNC | SND_FILENAME);
       return TRUE;
     }
-    PlaySound((LPCSTR)"../source/smashing.wav", nullptr, SND_ASYNC);
+    PlaySound((LPCSTR)"../source/smashing.wav", nullptr, SND_ASYNC | SND_FILENAME);
     if (board[click_field_x][click_field_y] == 0)
     {
       board[click_field_x][click_field_y] = current_player;  // zapisanie wyboru gracza
