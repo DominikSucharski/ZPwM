@@ -7,6 +7,7 @@ int board[3][3] = { 0 };
 int field_size = 80;  // rozmiar pola
 int board_padding = 30;  // odstêp planszy do gry od krawêdzi okna
 int current_player = 1;
+int winner = 0;
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR szCmdLine, int iCmdShow) {
   HWND hwndMainWindow = CreateDialog(hInstance, MAKEINTRESOURCE(IDD_MAINVIEW), NULL, MainWinProc);
@@ -17,8 +18,10 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR szCmdLine,
     DispatchMessage(&msg);
   }
   /*KONIEC GRY*/
-
-	return 0;
+  if (winner == 1) MessageBox(nullptr, TEXT("Wygra³ gracz 1"), TEXT("Koniec gry"), MB_OK);
+  else if (winner == 2) MessageBox(nullptr, TEXT("Wygra³ gracz 2"), TEXT("Koniec gry"), MB_OK);
+  else MessageBox(nullptr, TEXT("Remis"), TEXT("Koniec gry"), MB_OK);
+  return 0;
 }
 
 INT_PTR CALLBACK MainWinProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
@@ -30,16 +33,18 @@ INT_PTR CALLBACK MainWinProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lPar
   case WM_PAINT:  // rysowanie okna
   {
     HDC hDC = GetDC(hwnd);
-    for (auto i = 0; i < 4; i++)
+    // rysowanie planszy
+    for (auto i = 1; i < 3; i++)
     {
       MoveToEx(hDC, board_padding + i * field_size, board_padding, nullptr);  // pocz¹tek pionowej linii
       LineTo(hDC, board_padding + i * field_size, board_padding + 3 * field_size);  // pionowa linia
     }
-    for (auto i = 0; i < 4; i++)
+    for (auto i = 1; i < 3; i++)
     {
       MoveToEx(hDC, board_padding, board_padding + i * field_size, nullptr);  // pocz¹tek poziomej linii
       LineTo(hDC, board_padding + 3 * field_size, board_padding + i * field_size);  // pozioma linia
     }
+    auto free_fields = 0;
     // uzupe³nianie planszy
     for (auto i = 0; i < 3; i++)
     {
@@ -47,10 +52,10 @@ INT_PTR CALLBACK MainWinProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lPar
       {
         if (board[i][j] == 1)
         {  // rysuj x
-          MoveToEx(hDC, board_padding + i * field_size, board_padding + j * field_size, nullptr);
-          LineTo(hDC, board_padding + (i + 1) * field_size, board_padding + (j+1) * field_size);
-          MoveToEx(hDC, board_padding + i * field_size, board_padding + (j+1) * field_size, nullptr);
-          LineTo(hDC, board_padding + (i+1) * field_size, board_padding + j * field_size);
+          MoveToEx(hDC, board_padding + i * field_size + 10, board_padding + j * field_size + 10, nullptr);
+          LineTo(hDC, board_padding + (i + 1) * field_size - 10, board_padding + (j + 1) * field_size - 10);
+          MoveToEx(hDC, board_padding + i * field_size + 10, board_padding + (j + 1) * field_size - 10, nullptr);
+          LineTo(hDC, board_padding + (i + 1) * field_size - 10, board_padding + j * field_size + 10);
         }
         else if (board[i][j] == 2)
         {  // rysuj o
@@ -61,10 +66,29 @@ INT_PTR CALLBACK MainWinProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lPar
             (j + 1) * field_size + board_padding - 10  // prawy dolny róg prostok¹ta ograniczaj¹cego - y
           );
         }
+        else free_fields++;
       }
     }
     ReleaseDC(hwnd, hDC);
-    return TRUE;
+    // sprawdzanie poziome
+    if ((board[0][0] == board[0][1]) && (board[0][1] == board[0][2])) winner = board[0][0];
+    else if ((board[1][0] == board[1][1]) && (board[1][1] == board[1][2])) winner = board[1][0];
+    else if ((board[2][0] == board[2][1]) && (board[2][1] == board[2][2])) winner = board[2][0];
+    // sprawdzanie pionowe
+    else if ((board[0][0] == board[1][0]) && (board[1][0] == board[2][0])) winner = board[0][0];
+    else if ((board[0][1] == board[1][1]) && (board[1][1] == board[2][1])) winner = board[0][1];
+    else if ((board[0][2] == board[1][2]) && (board[1][2] == board[2][2])) winner = board[0][2];
+    // sprawdzanie skoœne
+    else if ((board[0][0] == board[1][1]) && (board[1][1] == board[2][2])) winner = board[1][1];
+    else if ((board[0][2] == board[1][1]) && (board[1][1] == board[2][0])) winner = board[1][1];
+
+    if(winner)
+    {
+      Sleep(200);
+      DestroyWindow(hwnd);
+      PostQuitMessage(0);
+    }
+  return TRUE;
   }
   case WM_LBUTTONDOWN:
   {
@@ -76,7 +100,7 @@ INT_PTR CALLBACK MainWinProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lPar
     //kontrola zmiennych odpowiadaj¹cych za wybrane pole
     if (click_field_x > 2 || click_field_y > 2) return TRUE;
 
-    if(board[click_field_x][click_field_y] == 0)
+    if (board[click_field_x][click_field_y] == 0)
     {
       board[click_field_x][click_field_y] = current_player;  // zapisanie wyboru gracza
       if (current_player == 2) current_player = 1;  // zmiana gracza
@@ -90,7 +114,7 @@ INT_PTR CALLBACK MainWinProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lPar
     return TRUE;
   default:
     return FALSE;
-  }
+}
 
-  return FALSE;
+return FALSE;
 }

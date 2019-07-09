@@ -1,8 +1,8 @@
-//{{NO_DEPENDENCIES}}
+﻿//{{NO_DEPENDENCIES}}
 // Microsoft Visual C++ generated include file.
-// Used by k�ko i krzy�yk.rc
+// Used by kółko i krzyżyk.rc
 //
-#define IDD_MAINVIEW                     101
+#define IDD_MAINVIEW                    101
 
 // Next default values for new objects
 // 

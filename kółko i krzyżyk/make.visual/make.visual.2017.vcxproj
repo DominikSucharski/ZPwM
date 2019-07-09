@@ -124,10 +124,10 @@
     <ClCompile Include="..\source\main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="resource.h" />
+    <ClInclude Include="..\source\resource.h" />
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="kółko i krzyżyk.rc" />
+    <ResourceCompile Include="..\source\kółko i krzyżyk.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
