@@ -17,3 +17,7 @@ Napisanie aplikacji lupki. Po kliknięciu na bitmapę ma powiekszyć fragment ob
 Dokończenie tworzenia gry (warunek wygranej lub remisu, liczenie punktów).
 * Zadanie 5:
 Stworzenie armii 50 ludzików maszerujących obok siebie składających sie z sześcianów.
+
+### Projekt:
+* 1. Kółko i krzyżyk
+* 2. Gra z grafiką 3D
