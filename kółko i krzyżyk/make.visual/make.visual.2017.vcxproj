@@ -133,11 +133,6 @@
   <ItemGroup>
     <ResourceCompile Include="..\source\kółko i krzyżyk.rc" />
   </ItemGroup>
-  <ItemGroup>
-    <Media Include="..\source\error.wav" />
-    <Media Include="..\source\smashing.wav" />
-    <Media Include="..\source\win.wav" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

@@ -29,15 +29,4 @@
       <Filter>Pliki zasobów</Filter>
     </ResourceCompile>
   </ItemGroup>
-  <ItemGroup>
-    <Media Include="..\source\error.wav">
-      <Filter>Pliki zasobów</Filter>
-    </Media>
-    <Media Include="..\source\smashing.wav">
-      <Filter>Pliki zasobów</Filter>
-    </Media>
-    <Media Include="..\source\win.wav">
-      <Filter>Pliki zasobów</Filter>
-    </Media>
-  </ItemGroup>
 </Project>

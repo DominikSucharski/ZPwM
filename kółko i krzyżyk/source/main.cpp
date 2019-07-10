@@ -1,5 +1,6 @@
 #include <Windows.h>
 #include "../source/resource.h"
+#include <algorithm>  // fill array
 #pragma comment(lib, "winmm.lib")  // playsound
 
 INT_PTR CALLBACK MainWinProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam);
@@ -10,18 +11,23 @@ int current_player = 1;
 int winner = 0;
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR szCmdLine, int iCmdShow) {
-  HWND hwndMainWindow = CreateDialog(hInstance, MAKEINTRESOURCE(IDD_MAINVIEW), NULL, MainWinProc);
-  MSG msg = {};
-  ShowWindow(hwndMainWindow, iCmdShow);
-  while (GetMessage(&msg, nullptr, 0, 0)) {
-    TranslateMessage(&msg);
-    DispatchMessage(&msg);
-  }
-  /*KONIEC GRY*/
-  PlaySound((LPCSTR)"../source/win.wav", nullptr, SND_ASYNC | SND_FILENAME);
-  if (winner == 1) MessageBox(nullptr, TEXT("Wygra³ gracz 1"), TEXT("Koniec gry"), MB_OK);
-  else if (winner == 2) MessageBox(nullptr, TEXT("Wygra³ gracz 2"), TEXT("Koniec gry"), MB_OK);
-  else MessageBox(nullptr, TEXT("Remis"), TEXT("Koniec gry"), MB_OK);
+  LPCSTR result_message;
+  do
+  {
+    HWND hwndMainWindow = CreateDialog(hInstance, MAKEINTRESOURCE(IDD_MAINVIEW), NULL, MainWinProc);
+    MSG msg = {};
+    ShowWindow(hwndMainWindow, iCmdShow);
+    while (GetMessage(&msg, nullptr, 0, 0)) {
+      TranslateMessage(&msg);
+      DispatchMessage(&msg);
+    }
+    /*KONIEC GRY*/
+    PlaySound((LPCSTR)"../sounds/win.wav", nullptr, SND_ASYNC | SND_FILENAME);
+    if (winner == 1) result_message = "Wygra³ gracz 1.\r\nChcesz zagraæ ponownie?";
+    else if (winner == 2) result_message = "Wygra³ gracz 2.\r\nChcesz zagraæ ponownie?";
+    else result_message = "Remis.\r\nChcesz zagraæ ponownie?";;
+    std::fill(&board[0][0], &board[0][0] + sizeof(board), 0);
+  } while (MessageBox(nullptr, result_message, TEXT("Koniec gry"), MB_YESNO) == IDYES);
   return 0;
 }
 
@@ -100,10 +106,10 @@ INT_PTR CALLBACK MainWinProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lPar
 
     //kontrola zmiennych odpowiadaj¹cych za wybrane pole
     if (click_field_x > 2 || click_field_y > 2) {
-      PlaySound((LPCSTR)"../source/error.wav", nullptr, SND_ASYNC | SND_FILENAME);
+      PlaySound((LPCSTR)"../sounds/error.wav", nullptr, SND_ASYNC | SND_FILENAME);
       return TRUE;
     }
-    PlaySound((LPCSTR)"../source/smashing.wav", nullptr, SND_ASYNC | SND_FILENAME);
+    PlaySound((LPCSTR)"../sounds/smashing.wav", nullptr, SND_ASYNC | SND_FILENAME);
     if (board[click_field_x][click_field_y] == 0)
     {
       board[click_field_x][click_field_y] = current_player;  // zapisanie wyboru gracza
