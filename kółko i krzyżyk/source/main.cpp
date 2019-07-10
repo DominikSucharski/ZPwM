@@ -4,16 +4,20 @@
 #pragma comment(lib, "winmm.lib")  // playsound
 
 INT_PTR CALLBACK MainWinProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam);
-int board[3][3] = { 0 };
+int board[3][3] = { 0 };  // [x][y]
 int field_size = 80;  // rozmiar pola
 int board_padding = 30;  // odstêp planszy do gry od krawêdzi okna
-int current_player = 1;
+int current_player;
 int winner = 0;
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR szCmdLine, int iCmdShow) {
   LPCSTR result_message;
+  int game_nr = 0;
   do
   {
+    game_nr += 1;
+    if ((game_nr % 2) == 1) current_player = 1;
+    else current_player = 2;
     HWND hwndMainWindow = CreateDialog(hInstance, MAKEINTRESOURCE(IDD_MAINVIEW), NULL, MainWinProc);
     MSG msg = {};
     ShowWindow(hwndMainWindow, iCmdShow);
@@ -23,10 +27,11 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR szCmdLine,
     }
     /*KONIEC GRY*/
     PlaySound((LPCSTR)"../sounds/win.wav", nullptr, SND_ASYNC | SND_FILENAME);
-    if (winner == 1) result_message = "Wygra³ gracz 1.\r\nChcesz zagraæ ponownie?";
-    else if (winner == 2) result_message = "Wygra³ gracz 2.\r\nChcesz zagraæ ponownie?";
+    if (winner == 1) result_message = "Wygra³ gracz 1 (x).\r\nChcesz zagraæ ponownie?";
+    else if (winner == 2) result_message = "Wygra³ gracz 2 (o).\r\nChcesz zagraæ ponownie?";
     else result_message = "Remis.\r\nChcesz zagraæ ponownie?";;
     std::fill(&board[0][0], &board[0][0] + sizeof(board), 0);
+    winner = 0;
   } while (MessageBox(nullptr, result_message, TEXT("Koniec gry"), MB_YESNO) == IDYES);
   return 0;
 }
@@ -40,6 +45,9 @@ INT_PTR CALLBACK MainWinProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lPar
   case WM_PAINT:  // rysowanie okna
   {
     HDC hDC = GetDC(hwnd);
+    SelectObject(hDC, GetStockObject(ANSI_VAR_FONT));  // pobranie i aktywacja czcionki
+    SetTextColor(hDC, RGB(0, 0, 0));  // ustawienie koloru
+    TextOut(hDC, field_size+board_padding*2, board_padding/2, TEXT("x : o"), 5);  // c - liczba znaków
     // rysowanie planszy
     for (auto i = 1; i < 3; i++)
     {
@@ -77,17 +85,21 @@ INT_PTR CALLBACK MainWinProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lPar
       }
     }
     ReleaseDC(hwnd, hDC);
-    // sprawdzanie poziome
-    if ((board[0][0] == board[0][1]) && (board[0][1] == board[0][2])) winner = board[0][0];
-    else if ((board[1][0] == board[1][1]) && (board[1][1] == board[1][2])) winner = board[1][0];
-    else if ((board[2][0] == board[2][1]) && (board[2][1] == board[2][2])) winner = board[2][0];
     // sprawdzanie pionowe
-    else if ((board[0][0] == board[1][0]) && (board[1][0] == board[2][0])) winner = board[0][0];
-    else if ((board[0][1] == board[1][1]) && (board[1][1] == board[2][1])) winner = board[0][1];
-    else if ((board[0][2] == board[1][2]) && (board[1][2] == board[2][2])) winner = board[0][2];
+    if (board[0][0] && (board[0][0] == board[0][1]) && (board[0][1] == board[0][2])) winner = board[0][0];
+    else if (board[1][0] && (board[1][0] == board[1][1]) && (board[1][1] == board[1][2])) winner = board[1][0];
+    else if (board[2][0] && (board[2][0] == board[2][1]) && (board[2][1] == board[2][2])) winner = board[2][0];
+    // sprawdzanie poziome
+    else if (board[0][0] && (board[0][0] == board[1][0]) && (board[1][0] == board[2][0])) winner = board[0][0];
+    else if (board[0][1] && (board[0][1] == board[1][1]) && (board[1][1] == board[2][1])) winner = board[0][1];
+    else if (board[0][2] && (board[0][2] == board[1][2]) && (board[1][2] == board[2][2])) winner = board[0][2];
     // sprawdzanie skoœne
-    else if ((board[0][0] == board[1][1]) && (board[1][1] == board[2][2])) winner = board[1][1];
-    else if ((board[0][2] == board[1][1]) && (board[1][1] == board[2][0])) winner = board[1][1];
+    if (board[1][1])
+    {
+      if ((board[0][0] == board[1][1]) && (board[1][1] == board[2][2])) winner = board[1][1];
+      else if ((board[0][2] == board[1][1]) && (board[1][1] == board[2][0])) winner = board[1][1];
+    }
+
 
     if (winner || (free_fields == 0))
     {
